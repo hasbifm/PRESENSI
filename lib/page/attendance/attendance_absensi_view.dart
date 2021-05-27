@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:get/get.dart';
+import 'package:presensi/controller/auth_controller.dart';
 import 'package:presensi/page/attendance/attendance_presensi_dialog.dart';
 
 class AttendanceAbsesnsi extends StatefulWidget {
@@ -10,6 +11,7 @@ class AttendanceAbsesnsi extends StatefulWidget {
 }
 
 class _AttendanceAbsesnsiState extends State<AttendanceAbsesnsi> {
+  final authcontroller = Get.put(AuthController());
   String qrCode = "Uknown";
   @override
   Widget build(BuildContext context) {
@@ -62,7 +64,7 @@ class _AttendanceAbsesnsiState extends State<AttendanceAbsesnsi> {
               trailing: ElevatedButton(
                 child: Text("Konfirmasi"),
                 style: ElevatedButton.styleFrom(primary: Colors.green),
-                onPressed: null,
+                onPressed: logout,
               ),
             ),
             Divider(),
@@ -85,5 +87,9 @@ class _AttendanceAbsesnsiState extends State<AttendanceAbsesnsi> {
         ),
       ),
     );
+  }
+
+  void logout() {
+    authcontroller.logOut();
   }
 }

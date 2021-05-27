@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:presensi/controller/attendance_controller.dart';
 import 'package:presensi/model/attendance.dart';
-import 'package:presensi/page/attendance/attendance_page.dart';
 import 'package:presensi/page/attendance/attendance_prensensi_form.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart';
@@ -85,18 +84,19 @@ class _PresensiDialogState extends State<PresensiDialog> {
       note: inNote,
       status: 1,
       isApproved: false,
-      clockIn: DateTime.now(),
-      overtimeDuration: DateTimeRange(
-        start: DateTime(DateTime.monthsPerYear, DateTime.monthsPerYear,
-            DateTime.daysPerWeek, 8, 0, 0, 0, 0),
-        end: DateTime.now(),
-      ),
-      isOvertime: checkLate(),
+      clockIn: DateTime.now().toString(),
+      // overtimeDuration: DateTimeRange(
+      //   start: DateTime(DateTime.monthsPerYear, DateTime.monthsPerYear,
+      //       DateTime.daysPerWeek, 8, 0, 0, 0, 0),
+      //   end: DateTime.now(),
+      // ),
+      // isOvertime: checkLate(),
       lat: inLat.toString(),
       lot: inLot.toString(),
     );
     Get.back();
-    attendacneController.addAttendance(presensi);
+    // attendacneController.addAttendance(presensi);
+    attendacneController.newAttendance(inTaskPlan, inNote);
     // }
   }
 

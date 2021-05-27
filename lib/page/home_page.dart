@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:presensi/controller/auth_controller.dart';
 import 'package:presensi/page/attendance/attendance_page.dart';
-import 'package:presensi/page/cuti_page.dart';
+
 import 'package:get/get.dart';
-import 'package:presensi/page/profile_page.dart';
+import 'package:presensi/page/cuti/cuti_page.dart';
+import 'package:presensi/page/profile/profile_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'approval/approval_page.dart';
 import 'overtime/overtime_page.dart';
@@ -13,6 +16,20 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final authcontroller = Get.put(AuthController());
+  String token;
+  @override
+  void initState() {
+    super.initState();
+    authcontroller.getProfile();
+  }
+
+  Future<void> getProfile() async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    var token = pref.getString('token');
+    print(token);
+  }
+
   int selectedIndex = 0;
   int tabbarIndex = 0;
 
@@ -31,7 +48,8 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: IconButton(
-                  icon: Icon(Icons.person), onPressed: () => Get.to(Profile())),
+                  icon: Icon(Icons.person),
+                  onPressed: () => Get.to(() => Profile())),
             )
           ],
           bottom: tabbar[selectedIndex],
