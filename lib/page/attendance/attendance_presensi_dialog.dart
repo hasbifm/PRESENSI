@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:presensi/controller/attendance_controller.dart';
-import 'package:presensi/model/attendance.dart';
+import 'package:presensi/model/attendance_model.dart';
 import 'package:presensi/page/attendance/attendance_prensensi_form.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart';
@@ -54,20 +54,27 @@ class _PresensiDialogState extends State<PresensiDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      content: Form(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text("Form Presensi"),
-            PresensiForm(
-              onChangedTaskPlan: (inputTaskPlan) =>
-                  setState(() => inTaskPlan = inputTaskPlan),
-              onChangedNote: (inputNote) => setState(() => inNote = inputNote),
-              onSaved: () => addPresensi(context),
-              onCancel: () => Get.back(),
-            ),
-          ],
+    return SingleChildScrollView(
+      child: AlertDialog(
+        title: Text(
+          "Presensi",
+          textAlign: TextAlign.center,
+        ),
+        content: Form(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Divider(),
+              PresensiForm(
+                onChangedTaskPlan: (inputTaskPlan) =>
+                    setState(() => inTaskPlan = inputTaskPlan),
+                onChangedNote: (inputNote) =>
+                    setState(() => inNote = inputNote),
+                onSaved: () => addPresensi(context),
+                onCancel: () => Get.back(),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -82,17 +89,17 @@ class _PresensiDialogState extends State<PresensiDialog> {
     final presensi = AttendanceModel(
       taskPlan: inTaskPlan,
       note: inNote,
-      status: 1,
-      isApproved: false,
-      clockIn: DateTime.now().toString(),
+      approvalStatus: 1.toString(),
+      isFinished: false,
+      clockInTime: DateTime.now().toString(),
       // overtimeDuration: DateTimeRange(
       //   start: DateTime(DateTime.monthsPerYear, DateTime.monthsPerYear,
       //       DateTime.daysPerWeek, 8, 0, 0, 0, 0),
       //   end: DateTime.now(),
       // ),
       // isOvertime: checkLate(),
-      lat: inLat.toString(),
-      lot: inLot.toString(),
+      gpsLat: inLat.toString(),
+      gpsLong: inLot.toString(),
     );
     Get.back();
     // attendacneController.addAttendance(presensi);

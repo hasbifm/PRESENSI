@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presensi/controller/overtime_controller.dart';
+import 'package:presensi/model/overtime_model.dart';
 import 'package:presensi/page/overtime/overtime_dialog.dart';
+
+import 'overtime_detail.dart';
 
 class Overtime extends StatefulWidget {
   @override
@@ -25,23 +28,35 @@ class _OvertimeState extends State<Overtime> {
             : ListView.builder(
                 itemCount: overtimeController.listOvertime.length,
                 itemBuilder: (context, index) {
-                  return Card(
-                    child: Column(
-                      children: [
-                        ListTile(
-                          leading: Text("date"),
-                          trailing: Text(overtimeController
-                              .listOvertime[index].date
-                              .toString()),
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: GestureDetector(
+                      onTap: () => getOvertimeDetail(
+                          overtimeController.listOvertime[index]),
+                      child: Card(
+                        child: Column(
+                          children: [
+                            ListTile(
+                              title: Text("date"),
+                              subtitle: Text(overtimeController
+                                  .listOvertime[index].calendarId
+                                  .toString()),
+                            ),
+                            ListTile(
+                              title: Text("Overtime Duration"),
+                              subtitle: Text(overtimeController
+                                  .listOvertime[index].duration
+                                  .toString()),
+                            ),
+                          ],
                         ),
-                        ListTile(
-                          leading: Text("Overtime Duration"),
-                          trailing: Text(
-                              overtimeController.listOvertime[index].duration),
-                        ),
-                      ],
+                      ),
                     ),
                   );
                 })));
+  }
+
+  getOvertimeDetail(OvertimeModel model) {
+    return Get.to(OvertimeDetail(model));
   }
 }

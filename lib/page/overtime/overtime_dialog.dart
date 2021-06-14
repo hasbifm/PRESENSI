@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:presensi/controller/overtime_controller.dart';
-import 'package:presensi/model/overtime.dart';
+import 'package:presensi/model/overtime_model.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -12,81 +12,141 @@ class OvertimeDialog extends StatefulWidget {
 class _OvertimeDialogState extends State<OvertimeDialog> {
   final OvertimeController overtimeController = Get.put(OvertimeController());
 
-  final List<String> items = <String>['1', '2', '3'];
-  String selectedItem = '1';
+  final List<int> items = <int>[1, 2, 3];
+  int selectedItem = 1;
 
+  var alasan = "";
+  var note = "";
   var timeStart = TimeOfDay.now();
   var timeEnd = TimeOfDay.now();
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      content: Form(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text("Overtime"),
-            Text(DateFormat('EEEE, dd-MM-yyyy').format(DateTime.now())),
-            // ListTile(
-            //   trailing: ElevatedButton(
-            //     onPressed: () {
-            //       showTimePicker(
-            //         context: context,
-            //         initialTime: TimeOfDay.now(),
-            //       ).then((value) => setState(() {
-            //             timeStart = value;
-            //             print(timeStart);
-            //           }));
-            //     },
-            //     child: Text(timeStart.format(context)),
-            //   ),
-            //   leading: Text("Pilih Jam"),
-            // ),
-            ListTile(
-              leading: Text("Durasi"),
-              trailing: widgetDropdown(),
+    return Center(
+      child: SingleChildScrollView(
+        child: AlertDialog(
+          title: Text(
+            "Overtime",
+            textAlign: TextAlign.center,
+          ),
+          content: Form(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ListTile(
+                  leading: Text("Date"),
+                  trailing: Text(
+                      DateFormat('EEEE, dd-MM-yyyy').format(DateTime.now())),
+                ),
+
+                // ListTile(
+                //   trailing: ElevatedButton(
+                //     onPressed: () {
+                //       showTimePicker(
+                //         context: context,
+                //         initialTime: TimeOfDay.now(),
+                //       ).then((value) => setState(() {
+                //             timeStart = value;
+                //             print(timeStart);
+                //           }));
+                //     },
+                //     child: Text(timeStart.format(context)),
+                //   ),
+                //   leading: Text("Pilih Jam"),
+                // ),
+                ListTile(
+                  leading: Text("Durasi"),
+                  trailing: widgetDropdown(),
+                ),
+                widgetBuildAlasan(),
+                widgetBuildNote(),
+                // widgetDropdown(),
+                widgetBuildButton(),
+              ],
             ),
-            // widgetDropdown(),
-            widgetBuildButton(),
-          ],
+          ),
         ),
+      ),
+    );
+  }
+
+  widgetBuildAlasan() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: TextFormField(
+        initialValue: alasan,
+        validator: (inAlasan) {
+          if (inAlasan.isEmpty) {
+            return "Alasan harus diisi";
+          } else {
+            return null;
+          }
+        },
+        onChanged: (inputAlasan) => setState(() => alasan = inputAlasan),
+        maxLines: 2,
+        decoration: InputDecoration(
+            border: UnderlineInputBorder(), labelText: "Task Plan"),
+      ),
+    );
+  }
+
+  widgetBuildNote() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: TextFormField(
+        initialValue: note,
+        validator: (inAlasan) {
+          if (inAlasan.isEmpty) {
+            return "Alasan harus diisi";
+          } else {
+            return null;
+          }
+        },
+        onChanged: (inputAlasan) => setState(() => note = inputAlasan),
+        maxLines: 2,
+        decoration:
+            InputDecoration(border: UnderlineInputBorder(), labelText: "Note"),
       ),
     );
   }
 
   widgetDropdown() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12.0),
-      child: DropdownButton<String>(
-        value: selectedItem,
-        onChanged: (String string) => setState(() => selectedItem = string),
-        selectedItemBuilder: (BuildContext context) {
-          return items.map<Widget>((String item) {
-            return Text(item);
-          }).toList();
-        },
-        items: items.map((String item) {
-          return DropdownMenuItem<String>(
-            child: Text('$item hour'),
-            value: item,
-          );
-        }).toList(),
-      ),
+    return DropdownButton<int>(
+      isDense: true,
+      value: selectedItem,
+      onChanged: (int string) => setState(() => selectedItem = string),
+      selectedItemBuilder: (BuildContext context) {
+        return items.map<Widget>((int item) {
+          return Text(item.toString());
+        }).toList();
+      },
+      items: items.map((int item) {
+        return DropdownMenuItem<int>(
+          child: Text('$item hour'),
+          value: item,
+        );
+      }).toList(),
     );
   }
 
   widgetBuildButton() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        ElevatedButton(
-          onPressed: () => Get.back(),
-          child: Text("Cancel"),
-          style: ElevatedButton.styleFrom(primary: Colors.redAccent),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ElevatedButton(
+            onPressed: () => Get.back(),
+            child: Text("Cancel"),
+            style: ElevatedButton.styleFrom(primary: Colors.redAccent),
+          ),
         ),
-        ElevatedButton(
-          onPressed: addToOvertime,
-          child: Text("Save"),
-          style: ElevatedButton.styleFrom(primary: Colors.greenAccent),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ElevatedButton(
+            onPressed: addToOvertime,
+            child: Text("Save"),
+            style: ElevatedButton.styleFrom(primary: Colors.greenAccent),
+          ),
         ),
       ],
     );
@@ -101,12 +161,15 @@ class _OvertimeDialogState extends State<OvertimeDialog> {
     // var dura = TimeOfDay(hour: _hourDiff, minute: _minDiff.truncate());
 
     final overtime = OvertimeModel(
-      date: DateTime.now(),
+      // date: DateFormat("yyyy-MM-dd").format(DateTime.now()),
       // startTime: timeStart,
       // endTime: timeEnd,
-      duration: selectedItem + " hour",
+      taskPlan: alasan,
+      note: note,
+      duration: selectedItem,
     );
     Get.back();
-    overtimeController.addAttendance(overtime);
+    overtimeController.newOvertime(
+        overtime.duration, overtime.taskPlan, overtime.note);
   }
 }

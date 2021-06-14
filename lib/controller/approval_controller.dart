@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:presensi/model/attendance.dart';
+import 'package:presensi/model/attendance_model.dart';
 import 'package:presensi/page/attendance/attendance_page.dart';
 
 class ApprovalController extends GetxController {

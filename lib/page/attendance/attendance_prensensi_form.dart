@@ -34,7 +34,7 @@ class PresensiForm extends StatelessWidget {
     return TextFormField(
       initialValue: taskPlan,
       onChanged: onChangedTaskPlan,
-      maxLines: 3,
+      maxLines: 1,
       decoration: InputDecoration(
           border: UnderlineInputBorder(), labelText: "Task Plan"),
     );
@@ -52,17 +52,23 @@ class PresensiForm extends StatelessWidget {
 
   widgetBuildButton() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        ElevatedButton(
-          onPressed: onCancel,
-          child: Text("Cancel"),
-          style: ElevatedButton.styleFrom(primary: Colors.redAccent),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ElevatedButton(
+            onPressed: onCancel,
+            child: Text("Cancel"),
+            style: ElevatedButton.styleFrom(primary: Colors.redAccent),
+          ),
         ),
-        ElevatedButton(
-          onPressed: onSaved,
-          child: Text("Save"),
-          style: ElevatedButton.styleFrom(primary: Colors.greenAccent),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ElevatedButton(
+            onPressed: onSaved,
+            child: Text("Save"),
+            style: ElevatedButton.styleFrom(primary: Colors.green),
+          ),
         ),
       ],
     );

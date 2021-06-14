@@ -3,7 +3,7 @@ import 'package:presensi/controller/auth_controller.dart';
 import 'package:presensi/page/attendance/attendance_page.dart';
 
 import 'package:get/get.dart';
-import 'package:presensi/page/cuti/cuti_page.dart';
+import 'package:presensi/page/cuti/absent_page.dart';
 import 'package:presensi/page/profile/profile_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final tabs = [Attendance(), Cuti(), Overtime(), Approval()];
+    final tabs = [Attendance(), Absent(), Overtime(), Approval()];
     final title = ["Attendance", "Cuti", "Overtime", "Approval"];
     final tabbarSize = [2, 0, 0, 3];
     final tabbar = [attendanceTabbar(), null, null, approvalTabbar()];

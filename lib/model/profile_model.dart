@@ -1,43 +1,70 @@
-class ProfileModel {
-  int id_role;
-  int division_office_id;
-  int time_setting_id;
-  String first_name;
-  String last_name;
-  String email;
-  bool isAutoApproved;
-  int parent_id;
+// To parse this JSON data, do
+//
+//     final profileModel = profileModelFromJson(jsonString);
 
+import 'dart:convert';
+
+ProfileModel profileModelFromJson(String str) =>
+    ProfileModel.fromJson(json.decode(str));
+
+String profileModelToJson(ProfileModel data) => json.encode(data.toJson());
+
+class ProfileModel {
   ProfileModel({
-    this.id_role,
-    this.division_office_id,
-    this.time_setting_id,
-    this.first_name,
-    this.last_name,
+    this.id,
+    this.roleId,
+    this.divisionOfficeId,
+    this.timeSettingId,
+    this.firstName,
+    this.lastName,
     this.email,
     this.isAutoApproved,
-    this.parent_id,
+    this.parentId,
+    this.createdAt,
+    this.updatedAt,
+    this.deletedAt,
   });
 
-  ProfileModel.fromJson(Map<String, dynamic> json) {
-    json['id_role'] == null ? id_role = 0 : id_role = json['id_role'];
+  int id;
+  int roleId;
+  int divisionOfficeId;
+  int timeSettingId;
+  String firstName;
+  String lastName;
+  String email;
+  bool isAutoApproved;
+  int parentId;
+  DateTime createdAt;
+  DateTime updatedAt;
+  dynamic deletedAt;
 
-    json['division_office_id'] == null
-        ? division_office_id = 0
-        : division_office_id = json['division_office_id'];
+  factory ProfileModel.fromJson(Map<String, dynamic> json) => ProfileModel(
+        id: json["id"],
+        roleId: json["role_id"],
+        divisionOfficeId: json["division_office_id"],
+        timeSettingId: json["time_setting_id"],
+        firstName: json["first_name"],
+        lastName: json["last_name"],
+        email: json["email"],
+        isAutoApproved: json["isAutoApproved"],
+        parentId: json["parent_id"],
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+        deletedAt: json["deleted_at"],
+      );
 
-    json['time_setting_id'] == null
-        ? time_setting_id = 0
-        : time_setting_id = json['time_setting_id'];
-
-    json['first_name'] == null
-        ? first_name = ""
-        : first_name = json['first_name'];
-
-    json['last_name'] == null ? last_name = "" : last_name = json['last_name'];
-
-    email = json['email'];
-    isAutoApproved = json['isAutoApproved'];
-    parent_id = json['parent_id'];
-  }
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "role_id": roleId,
+        "division_office_id": divisionOfficeId,
+        "time_setting_id": timeSettingId,
+        "first_name": firstName,
+        "last_name": lastName,
+        "email": email,
+        "isAutoApproved": isAutoApproved,
+        "parent_id": parentId,
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
+        "deleted_at": deletedAt,
+      };
 }

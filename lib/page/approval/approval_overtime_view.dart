@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class ApprovalAttendance extends StatefulWidget {
+class ApprovalOvertime extends StatefulWidget {
   @override
-  _ApprovalAttendanceState createState() => _ApprovalAttendanceState();
+  _ApprovalOvertimeState createState() => _ApprovalOvertimeState();
 }
 
-class _ApprovalAttendanceState extends State<ApprovalAttendance> {
+class _ApprovalOvertimeState extends State<ApprovalOvertime> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -23,17 +23,21 @@ class _ApprovalAttendanceState extends State<ApprovalAttendance> {
                 subtitle: Text("Adam"),
               ),
               ListTile(
-                title: Text("Clock-In Time"),
-                subtitle: Text("08.50"),
+                title: Text("Overtime Duration"),
+                subtitle: Text("2"),
               ),
               ListTile(
-                title: Text("Clock-OUt TIme"),
-                subtitle: Text("NOT_CLOCKED_OUT"),
+                title: Text("Start Time"),
+                subtitle: Text("08.45"),
               ),
               ListTile(
-                title: Text("Attendance Status"),
-                subtitle: Text("Approved"),
-              )
+                title: Text("End Time"),
+                subtitle: Text("10.45"),
+              ),
+              ListTile(
+                title: Text("Overtime Status"),
+                subtitle: Text("2"),
+              ),
             ],
           ),
         ),

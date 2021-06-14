@@ -33,12 +33,11 @@ class _ProfileState extends State<Profile> {
               Container(
                 color: Colors.indigo[800],
                 child: ListTile(
-                    title: Obx(() => authcontroller.profileList.isEmpty
+                    title: Obx(() => authcontroller.profile.value == null
                         ? Text("Empty")
                         : Text(
-                            authcontroller.profileList[0].first_name
-                                    .toString() +
-                                authcontroller.profileList[0].last_name
+                            authcontroller.profile.value.firstName.toString() +
+                                authcontroller.profile.value.lastName
                                     .toString(),
                             style: TextStyle(color: Colors.white),
                           )),
@@ -50,9 +49,10 @@ class _ProfileState extends State<Profile> {
                   ListTile(
                       title: Text("Email"),
                       subtitle: Obx(
-                        () => authcontroller.profileList.isEmpty
+                        () => authcontroller.profile.value == null
                             ? Text("Empty")
-                            : Text(authController.profileList[0].email),
+                            : Text(
+                                authController.profile.value.email.toString()),
                       ),
                       trailing:
                           IconButton(icon: Icon(Icons.edit), onPressed: null)),
@@ -64,17 +64,17 @@ class _ProfileState extends State<Profile> {
                   Divider(),
                   ListTile(
                     title: Text("Role"),
-                    subtitle: Obx(() => authcontroller.profileList.isEmpty
+                    subtitle: Obx(() => authcontroller.profile.value == null
                         ? Text("Empty")
-                        : Text('${authcontroller.profileList[0].id_role}')),
+                        : Text('${authcontroller.profile.value.roleId}')),
                   ),
                   Divider(),
                   ListTile(
                     title: Text("Division And Office"),
-                    subtitle: Obx(() => authcontroller.profileList.isEmpty
+                    subtitle: Obx(() => authcontroller.profile.value == null
                         ? Text("Empty")
                         : Text(
-                            '${authcontroller.profileList[0].division_office_id}')),
+                            '${authcontroller.profile.value.divisionOfficeId}')),
                   ),
                   Divider(),
                   ListTile(

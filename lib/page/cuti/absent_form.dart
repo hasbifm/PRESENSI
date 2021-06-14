@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class CutiForm extends StatelessWidget {
+class AbsentForm extends StatelessWidget {
   final String alasan;
   final ValueChanged<String> onChangedAlasan;
   final VoidCallback onSaved;
   final VoidCallback onCancel;
 
-  const CutiForm(
+  const AbsentForm(
       {Key key, this.alasan, this.onChangedAlasan, this.onSaved, this.onCancel})
       : super(key: key);
 
@@ -30,7 +30,7 @@ class CutiForm extends StatelessWidget {
         }
       },
       onChanged: onChangedAlasan,
-      maxLines: 3,
+      maxLines: 2,
       decoration:
           InputDecoration(border: UnderlineInputBorder(), labelText: "Alasan"),
     );
@@ -38,17 +38,23 @@ class CutiForm extends StatelessWidget {
 
   widgetBuildButton() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        ElevatedButton(
-          onPressed: onCancel,
-          child: Text("Cancel"),
-          style: ElevatedButton.styleFrom(primary: Colors.redAccent),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ElevatedButton(
+            onPressed: onCancel,
+            child: Text("Cancel"),
+            style: ElevatedButton.styleFrom(primary: Colors.red),
+          ),
         ),
-        ElevatedButton(
-          onPressed: onSaved,
-          child: Text("Save"),
-          style: ElevatedButton.styleFrom(primary: Colors.greenAccent),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ElevatedButton(
+            onPressed: onSaved,
+            child: Text("Save"),
+            style: ElevatedButton.styleFrom(primary: Colors.green),
+          ),
         ),
       ],
     );
